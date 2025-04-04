@@ -1,0 +1,46 @@
+Cities with -5 Hours (UTC+0)
+London (Global financial hub)
+
+Cities with -4 Hours (UTC+1)
+Paris (Major business and finance center)
+
+Madrid (Key European business hub)
+
+Rome (Important corporate and diplomatic hub)
+
+Amsterdam (Financial and tech hub)
+
+Berlin (Germany's business and startup hub)
+
+Frankfurt (Germany’s financial center)
+
+Cities with -3 Hours (UTC+2)
+Athens (Growing financial and business location)
+
+Cities with -2 Hours (UTC+3)
+Istanbul (A bridge between Europe and Asia for business)
+
+Cities with -1 Hour (UTC+4)
+Dubai (Middle Eastern business hub)
+
+Cities with +3 Hours (UTC+8)
+Singapore (One of the world’s top business hubs)
+
+Hong Kong (Global financial and trading center)
+
+Shanghai (China’s top business city)
+
+Cities with +4 Hours (UTC+9)
+Tokyo (Asia’s largest financial center)
+
+Seoul (Tech and business hub)
+
+Cities with +6 Hours (UTC+11)
+Sydney (Key business and finance city in Australia)
+
+Cities with -9 Hours (UTC-4)
+New York (The world’s top financial center)
+
+Toronto (Canada’s business and tech hub)
+
+Washington, D.C. (Political and corporate headquarters)
