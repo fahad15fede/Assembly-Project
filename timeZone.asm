@@ -1,6 +1,6 @@
 
-
 getTime MACRO t1
+      LOCAL calling_converter1, calling_converter2, skipConverter
 
         ; Get current time
     mov ah, 2Ch
@@ -12,37 +12,28 @@ getTime MACRO t1
     add al, t1
    
     cmp al, 0
-    jl converter2
+    jl calling_converter2
 
     cmp al, 24
-    jl converter1
+    jge calling_converter1
 
-
-
-    sub al, 24
-    converter1:
-
-    aam               ; split into tens (AH) and units (AL)
-    add ah, 48    ; convert to ASCII
+     aam
+    add ah, 48
     add al, 48
-
     mov bh, ah
     mov bl, al
-
     mov dl, bh
     mov ah, 2
-    int 21h           ; print tens digit
+    int 21h
     mov dl, bl
     mov ah, 2
-    int 21h           ; print units digit
+    int 21h
 
-    ; Print ':'
     mov dl, ':'
     mov ah, 2
     int 21h
 
-    ; === Print Minute ===
-    mov al, cl        ; minute
+    mov al, cl
     aam
     add ah, 48
     add al, 48
@@ -55,56 +46,19 @@ getTime MACRO t1
     mov ah, 2
     int 21h
 
-    mov ah, 4ch
-    int 21h
+    jmp skipConverter
 
-    converter2:
+calling_converter1:
+    call converter1
+    jmp skipConverter
 
-    add al, 24
+calling_converter2:
+    call converter2
 
-    aam               ; split into tens (AH) and units (AL)
-    add ah, 48    ; convert to ASCII
-    add al, 48
-
-    mov bh, ah
-    mov bl, al
-
-    mov dl, bh
-    mov ah, 2
-    int 21h           ; print tens digit
-    mov dl, bl
-    mov ah, 2
-    int 21h           ; print units digit
-
-    ; Print ':'
-    mov dl, ':'
-    mov ah, 2
-    int 21h
-
-    ; === Print Minute ===
-    mov al, cl        ; minute
-    aam
-    add ah, 48
-    add al, 48
-    mov bh, ah
-    mov bl, al
-    mov dl, bh
-    mov ah, 2
-    int 21h
-    mov dl, bl
-    mov ah, 2
-    int 21h
-
-    mov ah, 4ch
-    int 21h
-
-
-
- 
-
+skipConverter:
 ENDM
 
-par MACRO p1, p2
+par MACRO p1, p2, p3
     mov dx, offset p1 ; Print time Difference
     mov ah, 9
     int 21H
@@ -127,10 +81,12 @@ par MACRO p1, p2
 
 ENDM
 
+
 dosseg
 .model small
 .stack 100h
 .data
+    userinput db ' Select a city : $'
     mainTitle db "Time Zone$"
     city db '1.Amsterdam$    ' , '2.Berlin$       ' , '3.Dubai$        ' , '4.Frankfurt$    ' , '5.Hong Kong$    ' , '6.Istanbul$     ' , '7.New York$     ' , '8.Paris$        ' ,  '9.Rome$         ' , '10.Sydney$      '
     
@@ -184,10 +140,43 @@ cities:
     add si, 16
  
     loop cities
+    CALL ENTERKEY
+    lea dx, userinput
+    MOV ah, 9
+    int 21h 
 
+    mov ah, 1
+    int 21h
+
+    sub al, '0'
+
+    cmp al, 8
+    je calling_Paris
+
+    cmp al, 9
+    je calling_Rome
+    
+    ; cmp al, '0'
+    ; je calling_Sydney
 
 mov ah, 4ch
 int 21h
+
+calling_Paris:
+    par minusFour currentTimeMsg parTime    
+    mov ah, 4ch
+    int 21h
+
+calling_Rome:
+    par minusFour currentTimeMsg romTime    
+    mov ah, 4ch
+    int 21h
+
+calling_Sydney:
+    par plusSix currentTimeMsg sydTime
+    mov ah, 4ch
+    int 21h
+
 main endp
 
 ENTERKEY PROC
@@ -201,6 +190,87 @@ INT 21H
 RET ;RETURN
 
 ENTERKEY ENDP
+
+
+converter1 PROC
+
+    sub al, 24
+    aam               ; split into tens (AH) and units (AL)
+    add ah, 48    ; convert to ASCII
+    add al, 48
+
+    mov bh, ah
+    mov bl, al
+
+    mov dl, bh
+    mov ah, 2
+    int 21h           ; print tens digit
+    mov dl, bl
+    mov ah, 2
+    int 21h           ; print units digit
+
+    ; Print ':'
+    mov dl, ':'
+    mov ah, 2
+    int 21h
+
+    ; === Print Minute ===
+    mov al, cl        ; minute
+    aam
+    add ah, 48
+    add al, 48
+    mov bh, ah
+    mov bl, al
+    mov dl, bh
+    mov ah, 2
+    int 21h
+    mov dl, bl
+    mov ah, 2
+    int 21h
+
+
+    RET ;RETURN
+
+converter1 ENDP
+
+converter2 PROC
+    add al, 24
+
+    aam               ; split into tens (AH) and units (AL)
+    add ah, 48    ; convert to ASCII
+    add al, 48
+
+    mov bh, ah
+    mov bl, al
+
+    mov dl, bh
+    mov ah, 2
+    int 21h           ; print tens digit
+    mov dl, bl
+    mov ah, 2
+    int 21h           ; print units digit
+
+    ; Print ':'
+    mov dl, ':'
+    mov ah, 2
+    int 21h
+
+    ; === Print Minute ===
+    mov al, cl        ; minute
+    aam
+    add ah, 48
+    add al, 48
+    mov bh, ah
+    mov bl, al
+    mov dl, bh
+    mov ah, 2
+    int 21h
+    mov dl, bl
+    mov ah, 2
+    int 21h
+    RET ;RETURN
+
+converter2 ENDP
 
 end main
 
