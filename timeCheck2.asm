@@ -133,69 +133,69 @@ main proc
 
     ; Call appropriate procedure based on user input (1-10)
     cmp al, 1
-    je call_Ams
+    jmp far ptr call_Ams
     cmp al, 2
-    je call_Ber
+    jmp far ptr call_Ber
     cmp al, 3
-    je call_Dub
-    cmp al, 4
-    je call_Fra
-    cmp al, 5
-    je call_Hong
-    cmp al, 6
-    je call_Ist
-    cmp al, 7
-    je call_New
-    cmp al, 8
-    je call_Paris
-    cmp al, 9
-    je call_Rome
-    cmp al, 10
-    je call_Syd
+    jmp far ptr call_Dub
+    ; cmp al, 4
+    ; je call_Fra
+    ; cmp al, 5
+    ; je call_Hong
+    ; cmp al, 6
+    ; je call_Ist
+    ; cmp al, 7
+    ; je call_New
+    ; cmp al, 8
+    ; je call_Paris
+    ; cmp al, 9
+    ; je call_Rome
+    ; cmp al, 10
+    ; je call_Syd
 
     ; If input is invalid (not between 1 and 10)
     mov ah, 4Ch
     int 21h
 
 call_Ams:
-    par minusOne currentTimeMsg amsTime
+    par minusOne, currentTimeMsg, amsTime
     CALL exitProg
 
 call_Ber:
-    par minusOne currentTimeMsg berTime
+    par minusOne, currentTimeMsg ,berTime
     CALL exitProg
 
 call_Dub:
-    par minusTwo currentTimeMsg dubTime
+    par minusTwo ,currentTimeMsg, dubTime
     CALL exitProg
 
-call_Fra:
-    par minusFour currentTimeMsg fraTime
-    CALL exitProg
+; call_Fra:
+;     par minusFour currentTimeMsg fraTime
+;     CALL exitProg
 
-call_Hong:
-    par plusThree currentTimeMsg hongTime
-    CALL exitProg
+; call_Hong:
+;     par plusThree currentTimeMsg hongTime
+;     CALL exitProg
 
-call_Ist:
-    par plusThree currentTimeMsg istTime
-    CALL exitProg
+; call_Ist:
+;     par plusThree currentTimeMsg istTime
+;     CALL exitProg
 
-call_New:
-    par minusNine currentTimeMsg newTime
-    CALL exitProg
+; call_New:
+;     par minusNine currentTimeMsg newTime
+;     CALL exitProg
 
-call_Paris:
-    par minusFour currentTimeMsg parTime
-    CALL exitProg
+; call_Paris:
+;     par minusFour currentTimeMsg parTime
+;     CALL exitProg
 
-call_Rome:
-    par minusFour currentTimeMsg romTime
-    CALL exitProg
+; call_Rome:
+;     par minusFour currentTimeMsg romTime
+;     CALL exitProg
 
-call_Syd:
-    par plusSix currentTimeMsg sydTime
-    CALL exitProg
+; call_Syd:
+;     par plusSix currentTimeMsg sydTime
+;     CALL exitProg
 
 exitProg:
     mov ah, 4Ch
