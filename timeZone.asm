@@ -80,6 +80,73 @@ par MACRO p1, p2, p3 , p4, p5
 
 ENDM
 
+
+
+ams MACRO ams1, ams2, ams3 , ams4, ams5
+    mov dx, offset ams1 ; Print time Difference
+    mov ah, 9
+    int 21H
+    CALL ENTERKEY
+
+    lea dx, ams2 ; Show Current time
+    mov ah, 9
+    int 21h
+    getTime 0
+    CALL ENTERKEY
+
+    lea dx, ams3 ; amsterdam time
+    mov ah, 9
+    int 21h
+    getTime -4
+    CALL ENTERKEY
+
+    travel ams4, ams5
+
+ENDM
+ber MACRO ber1, ber2, ber3 , ber4, ber5
+    mov dx, offset ber1 ; Print time Difference
+    mov ah, 9
+    int 21H
+    CALL ENTERKEY
+
+    lea dx, ber2 ; Show Current time
+    mov ah, 9
+    int 21h
+    getTime 0
+    CALL ENTERKEY
+
+    lea dx, ber3 ; berlin time
+    mov ah, 9
+    int 21h
+    getTime -4
+    CALL ENTERKEY
+
+    travel ber4, ber5
+
+ENDM
+dub MACRO dub1, dub2, dub3 , dub4, dub5
+    mov dx, offset dub1 ; Print time Difference
+    mov ah, 9
+    int 21H
+    CALL ENTERKEY
+
+    lea dx, dub2 ; Show Current time
+    mov ah, 9
+    int 21h
+    getTime 0
+    CALL ENTERKEY
+
+    lea dx, dub3 ; Dubai time
+    mov ah, 9
+    int 21h
+    getTime -2
+    CALL ENTERKEY
+
+    travel dub4, dub5
+
+ENDM
+
+
 travel MACRO t1, t2
 
     mov si, offset t2
@@ -209,6 +276,17 @@ cities:
     cmp al, '8'
     jmp far ptr calling_Paris
 
+;   cmp al, '1'
+;   jmp far ptr calling_Amsterdam
+  
+;   cmp al, '2'
+;   jmp far ptr calling_Berlin
+    
+;   cmp al, '3'
+;   jmp far ptr calling_Dubai
+      
+;usaid
+
     ; cmp al, '9'
     ; jmp far ptr calling_Rome
 
@@ -224,6 +302,29 @@ calling_Paris:
 
     mov ah, 4ch
     int 21h
+
+; calling_Amsterdam:
+;     ams minusFour, currentTimeMsg, amsTime , macroInput, inptime
+;     jmp choice    
+
+;     mov ah, 4ch
+;     int 21h
+    
+;     calling_Berlin:
+;     ber minusFour, currentTimeMsg, berTime , macroInput, inptime
+;     jmp choice    
+
+;     mov ah, 4ch
+;     int 21h
+
+; calling_Dubai:
+;     dub minusTwo, currentTimeMsg, dubTime , macroInput, inptime
+;     jmp choice    
+
+;     mov ah, 4ch
+;     int 21h
+
+; usaid
 
 ; calling_Rome:
 ;     par minusFour currentTimeMsg romTime, macroInput, inptime
